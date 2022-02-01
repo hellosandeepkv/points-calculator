@@ -1,0 +1,41 @@
+.cards-container,
+.master-card {
+  margin-top: 5%;
+}
+
+.master-card,
+.hero-text {
+  margin-top: 3% !important;
+  margin: 0 auto;
+  max-width: 90%;
+  background-color: #ecf0f1;
+}
+
+.mat-card:not([class*='mat-elevation-z']) {
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 1), 0 1px 1px 0 rgba(0, 0, 0, 1),
+    0 1px 3px 0 rgba(0, 0, 0, 1);
+}
+
+.child-cards {
+  height: 90%;
+  min-width: 45% !important;
+  max-width: 90% !important;
+}
+
+.form {
+  margin: 10% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 70% !important;
+}
+
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-table {
+  margin: 5% !important;
+  width: 90% !important;
+}

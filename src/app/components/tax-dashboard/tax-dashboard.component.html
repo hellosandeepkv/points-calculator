@@ -1,0 +1,138 @@
+<mat-card class="hero-text" fxLayout="row" fxLayoutAlign="center"
+  ><mat-card-header class="mat-display-2">🇨🇦 TAX CALCULATOR </mat-card-header>
+</mat-card>
+
+<mat-card class="master-card" fxLayout="row" fxLayoutAlign="center">
+  <div
+    class="cards-container"
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="25px"
+  >
+    <mat-card class="child-cards" id="tax-form">
+      <mat-card-header>
+        <mat-card-title>Tax Form</mat-card-title>
+        <mat-card-subtitle>Please enter your tax details</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="form" fxLayout="column" fxLayoutAlign="center">
+          <label>Select your tax year </label>
+          <form
+            fxLayout="column"
+            fxLayoutAlign=""
+            [formGroup]="taxForm"
+            autocomplete="off"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>Tax Year</mat-label>
+              <mat-select class="select" formControlName="year">
+                <mat-option
+                  class="mat-option"
+                  *ngFor="let year of YEARS"
+                  [value]="year"
+                  >{{ year }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            <label>Enter your total taxable income</label>
+            <mat-form-field appearance="fill" floatLabel="always">
+              <mat-label>Amount</mat-label>
+              <input
+                name="amount"
+                matInput
+                maxlength="8"
+                type="number"
+                class="example-right-align"
+                placeholder="0"
+                formControlName="amount"
+              />
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+            <button
+              class="calculate"
+              type="submit"
+              mat-raised-button
+              color="primary"
+              [disabled]="taxForm.invalid"
+              (click)="$event.stopPropagation(); fetchTaxBrackets(year.value)"
+            >
+              CALCULATE
+            </button>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="child-cards" id="results-form">
+      <mat-card-header>
+        <mat-card-title>Your Results</mat-card-title>
+        <mat-card-subtitle
+          >Tax assesment based on your information</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-list>
+          <div mat-subheader>Results</div>
+          <mat-list-item>
+            <mat-icon mat-list-icon>🏦</mat-icon>
+            <div mat-line>Tax Rate Applied</div>
+            <div mat-line class="tax-rate">{{ taxRate + '%' }}</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>💵</mat-icon>
+            <div mat-line>Tax Bracket</div>
+            <div mat-line class="tax-bracket">
+              {{ taxBracketMin }}-{{ taxBracketMax }}
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>😅</mat-icon>
+            <div mat-line>Tax Due</div>
+            <div mat-line class="tax-due">{{ taxDue | currency }}</div>
+          </mat-list-item>
+        </mat-list></mat-card-content
+      >
+    </mat-card>
+    <mat-card class="child-cards" id="tax-table">
+      <mat-card-header>
+        <mat-card-title>Tax Brackets</mat-card-title>
+        <mat-card-subtitle
+          >Tax Brackets for your reference for the year
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="min">
+            <th mat-header-cell *matHeaderCellDef>Min Income</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.min | currency }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="max">
+            <th mat-header-cell *matHeaderCellDef>Max Income</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.max | currency }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef>Tax rate</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.rate + '%' }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell no-records" colspan="4">No records.</td>
+          </tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div></mat-card
+>
